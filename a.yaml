@@ -1,0 +1,56 @@
+model:
+  img_height: 512
+  img_width: 512
+  layers:
+    - type: Conv2D
+      filters: 64
+      kernel_size: [3, 3]
+      padding: "same"
+      activation: "relu"
+    - type: MaxPooling2D
+      pool_size: [3, 3]
+    - type: Conv2D
+      filters: 128
+      kernel_size: [3, 3]
+      padding: "same"
+      activation: "relu"
+    - type: MaxPooling2D
+      pool_size: [3, 3]
+    - type: Conv2D
+      filters: 256
+      kernel_size: [3, 3]
+      padding: "same"
+      activation: "relu"
+    - type: MaxPooling2D
+      pool_size: [3, 3]
+    - type: Conv2D
+      filters: 512
+      kernel_size: [3, 3]
+      padding: "same"
+      activation: "relu"
+    - type: MaxPooling2D
+      pool_size: [3, 3]
+    - type: Flatten
+    - type: Dense
+      activation: "relu"
+    - type: Dense
+      activation: "softmax"
+
+compile:
+  optimizer:
+    type: Adam
+    learning_rate: 0.001
+  loss:
+    type: SparseCategoricalCrossentropy
+    from_logits: false
+  metrics: ["accuracy"]
+
+training:
+  epochs: 128
+  batch_size: 32
+  name: ReduceLROnPlateau
+  monitor: val_loss
+  factor: 0.5
+  patience: 10
+  min_lr: 0.00001
+  #min_lr: 0.0001 было
